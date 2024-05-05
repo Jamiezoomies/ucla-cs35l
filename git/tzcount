@@ -1,0 +1,7 @@
+#!/bin/bash
+
+git log "$1" | grep -E "^Date:.*[-+][0-9]{4}$" | rev | cut -c -5 | rev | sort | uniq -c |  awk '{printf("%s %s\n", $2, $1)}'
+
+
+
+

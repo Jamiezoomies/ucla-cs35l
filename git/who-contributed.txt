@@ -1,0 +1,13 @@
+The following command displays the commit that contains the specific string:
+
+    git log -p -S"Even newspaper reports present contradictory information"
+
+
+To search for this text in the buffer of the log, I used the search command.
+
+   /Even newspaper <RET>
+
+The result of my investigation:
+
+    The commit was created by Arthur David Olson on 1995-12-21.
+    The statement was introduced by Paul Eggert on 1995-12-19.

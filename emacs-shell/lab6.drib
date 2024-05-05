@@ -1,0 +1,1 @@
+xcompileggcc -o hello hello.c!./hello > hello-a1 2> hello-a2!./hello <&- > hello-b1 2> hello-b2!./hello < /etc/passwd > hello-c1 2> hello-c2!./hello < /etc/passwd > /dev/full 2> hello-d2

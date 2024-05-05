@@ -1,0 +1,109 @@
+UCLA CS35L WINTER24
+Name: Tae Hwan Kim
+UID: 506043010
+
+
+Began the project by setting up the initial environment and downloading necessary files:
+
+1. Downloaded the project archive:
+    wget "https://web.cs.ucla.edu/classes/winter24/cs35L/assign/randall-git.tgz"
+2. Extracted the files from the archive:
+    tar -xzvf randall-git.tgz
+
+Added `make check`:
+
+1. Added a check target in the Makefile to automatically test the randall executable's output. 
+This command generates 100 bytes of random data, verifies the output length 
+matches exactly 100 bytes, and reports a pass or fail result.
+2. Specified a FILES variable containing a list of refactored C source files 
+(options.c, output.c, rand64-hw.c, rand64-sw.c) for the compilation of the randall executable. 
+This addition clarifies the dependencies and components involved in the build process.
+
+
+Options Refactor:
+
+1. Refactored the command-line argument parsing into a separate module, options.c, 
+with a header file options.h, to streamline the main program's logic and enhance modularity. 
+The parse_options function checks the argument count, validates the input, 
+and initializes an Options struct with the number of bytes to generate and a validity flag.
+2. Updated the Makefile to include options.c in the FILES variable, 
+ensuring it is compiled along with the other source files. 
+This change allows for easier expansions or modifications to command-line parsing in the future.
+
+Output Refactor:
+
+1. Extracted the writebytes function into its own module to clean up from randall.c.
+2. Updated the Makefile to include output.c in the FILES variable.
+
+Rand64 Hardware Refactor:
+
+1. Extracted the hardware-specific random number generation code into its own module, 
+    creating a new file named rand64-hw.c.
+    Removed the static keyword from functions, enhancing their accessibility from the main.
+2. Updated the Makefile to include rand64-hw.c in the FILES variable.
+
+Rand64 Software Refactor:
+
+1. Extracted the software-specific random number generation code into its own module, 
+    creating a new file named rand64-hw.c.
+    Removed the static keyword from functions, enhancing their accessibility from the main.
+2. Updated the Makefile to include rand64-sw.c in the FILES variable.
+
+
+Introduced Input Options:
+
+1. Modified Options.c to take input and output options:
+    Enhanced the program to parse -i (input) and -o (output) options with getopt. 
+    The -o option handles both "stdio" and numeric values 
+    for output block size, with checks for validity.
+
+2. Enhanced rand64-sw: 
+    Updated rand64-sw.c to accommodate file paths as input options.
+
+3. Introduction of rand64-lrand48.c: 
+    Introduced rand64-lrand48.c, a new module enabling random number generation 
+    using the lrand48() function. 
+
+4. Main Function Update in randall.c: 
+    Modified the main function in randall.c 
+    to dynamically select the appropriate random number generation method 
+    based on user-defined options (rdrand, lrand48, or file path).
+
+5. Update MakeFile: 
+    Updated the Makefile to incorporate rand64-lrand48.c.
+    Additionally, some `make check` are added to check the result 
+    with rdrand, lrand48, and file input options.
+
+
+Introduced Output Options:
+
+1. Added a new function write_N_bytes into output.c. It handles memory allocation 
+    for the output buffer and writes the bytes in chunks.
+2. Modified the main function in randall.c to support output options. 
+    The program dynamically selects the appropriate output method 
+    based on the chosen output option.
+3. some `make check` are added to check the result with output options.
+
+
+Performance Records:
+
+time dd if=/dev/urandom ibs=8192 obs=8192 count=16384 >/dev/null
+real    0m0.929s
+user    0m0.014s
+sys     0m0.896s
+
+time ./randall 133562368 >/dev/null
+real    0m3.299s
+user    0m3.266s
+sys     0m0.017s
+
+time ./randall 133562368 | cat >/dev/null
+real    0m3.472s
+user    0m3.318s
+sys     0m0.285s
+
+time ./randall 133562368 >rand.data
+real    0m3.612s
+user    0m3.038s
+sys     0m0.353s
+

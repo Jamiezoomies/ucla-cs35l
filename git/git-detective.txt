@@ -1,0 +1,48 @@
+Since the release note was mentioned in the Git v2.39 Release Notes, I attempted to search for a string related to `merge-tree`.
+
+      git log v2.38.0^..v2.39.0 --grep='merge-tree'
+
+
+Then, I found a commit `bcf22f` with a comment mentioning the merge of branch `js/merge-ort-in-read-only-repo` into `maint-2.38`, which aligns with the release note.
+
+The commit `bcf22f` reveals that commit `9248d` was merged into `7f8a6c`.
+Upon inspecting commit `92481d`:
+
+     git log 92481d
+
+The commit comment states that the author fixed a segmentation fault in the previous commit. To review the changes made, I navigated to the parent of commit `92481d`:
+
+    git log 92481d^
+
+
+This command led me to commit `0b55d9`, authored by Johannes Schindelin on 2022-09-28.
+
+The commit that fixed the problem:
+Commit ID: 0b55d9
+Author: Johannes Schindelin
+Date: 2022-09-28
+
+
+To observe the actual code changes, I used the command:
+
+   git diff 0b55d9^..0b55d9
+
+According to the comment, the author modified it to stop ignoring the return value of `write_object_file()` and `write_tree()`, and set `clean = -1` in the error case.
+
+
+To indentify the commit responsible for introducing the problematic code, I used the following command to search for a specific code snippet:
+
+   git log -S'static void write_tree'
+
+This search led me to commit id `ee4012`, authored by Elijah Newren.
+
+The problematic code introduced by:
+Commit ID: ee4012
+Author: Elijah Newren
+Date: 2020-12-13
+
+
+
+Finally, I created a patch file for the relevant change that fixed the problem using the following command:
+
+	 git format-patch -1 0b55d9

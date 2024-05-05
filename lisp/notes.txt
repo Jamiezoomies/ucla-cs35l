@@ -1,0 +1,100 @@
+CS35L Winter 24
+Assignment 2 Note
+
+Name: Tae Hwan Kim
+UID: 506043010
+
+***Exercise 2.1***
+
+The 14th Perfect number:
+
+(setq perfect-number (* (expt 2 (- 607 1)) (- (expt 2 607) 1)))
+(+ (logb perfect-number) 1)
+1213
+
+The 14th perfect number taks 1213 bits to be represented in base-2 notation.
+
+
+
+Examine keybindings in more detail:
+
+'C-h k' runs the command describe-key, displaying documentation for the function invoked by KEY-LIST.
+Consequently, typing 'C-h k C-h k' displays documentation for the function invoked by the keybinding 'C-h k' on a new window.
+
+Similarly, typing 'C-h k M-SPC' displays documentation for the function invoked by the keybinding 'M-SPC' on a new window.
+According to the documentation, M-SPC runs the 'cycle-spacing' command, which manipulates whitespace around the cursor point in a smart way.
+
+'M-SPC' trims a significant amount of whitespace to a single space.
+
+
+I could get to the source code using 'M-x find-library RET simple.el RET'
+
+
+
+***Exercise 2.2***
+
+M-x what-line shows what line the current cursor is on.
+
+
+
+
+***Homework: Python Scripting***
+
+
+-What happens when "randline.py" is invoked on an empty file?
+
+It returns IndexError: list index out of range.
+An empty file includes no lines.
+In python2, when invoking random.py, it raises IndexError because seq is empty.
+
+
+-What happens when "randline.py" is invoked with Python 3?
+
+SyntaxError: invalid syntax
+except IOError as (errno, strerror)
+
+This is because the syntax like this is not allowed in Python 3.
+
+
+-What happens when your shuf.py script is invoked with Python 2 rather than Python 3, and why?
+
+My shuf.py script is invoked with both Python 2 and Python 3 without any errors.
+
+
+-Benchmark and System version
+
+Predate Python 3.11
+time /usr/bin/python3 ./shuf.py </usr/share/unicode/ucd/BidiTest.txt >/dev/null
+
+Median
+real 0.774s
+user 0.733s
+sys  0.035s
+
+Python 3.11 or later
+time /usr/local/cs/bin/python3 ./shuf.py </usr/share/unicode/ucd/BidiTest.txt >/dev/null
+
+Median
+real 0.532s
+user 0.488s
+sys  0.029s
+
+
+Coreutils
+time /usr/local/cs/bin/shuf </usr/share/unicode/ucd/BidiTest.txt >/dev/null
+
+Median
+real 0.071s
+user 0.059s
+sys  0.011s
+
+
+CPU
+Architecture: x86_64
+CPU(s): 4
+Thread(s) per core: 1
+CPU family: 6
+Model: Intel(R) Xeon(R) Silver 4116 CPU @ 2.10GHz
+
+OS
+Red Hat Enterprise Linux 8.5 (Ootpa)

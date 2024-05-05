@@ -1,0 +1,61 @@
+#Lab A
+1.
+https://github.com/eggert/tz/compare/HEAD^..HEAD
+The link is a comparison between the most recent commit and its previous commit.
+
+2.
+https://github.com/eggert/tz/compare/2023d..2024a
+The link is a comparison between the tagged commits, "2024a" and "2023d".
+
+3.
+Clone the tzdb development repository, in Git format.
+   git clone "https://github.com/eggert/tz.git"
+
+4.
+HEAD^: The '^' symbol points to the parent of HEAD, the current commit.
+HEAD: The current commit
+
+git diff HEAD^..HEAD displays the difference between the previous commit and current commit.
+
+To make an output file:
+./justone >justone.out
+
+5.
+The script will take in two stdins, which are tagged commits (e.g. 2023d, 2024a) and display the difference between them.
+
+To Make an output file:
+./compare-releases 2023d 2024a > 2023d-2024a.diff
+
+
+6.
+To Make an output file:
+./tzcount 2012j..2024a > tzdb-2012j-2024a.tzcount
+
+
+7. described in `who-contributed.txt`
+
+
+#Lab B
+
+1.
+To examine the commits, cloned the repository to the directory ~eggert/src/github/git:
+
+   git clone ~eggert/src/github/git
+
+To reference the logs and details for the graph, used the following command:
+
+   git log --graph 2a7d63^..c03bee --pretty=format:'%H, %an, %cn'
+
+
+
+2.
+To clone Git's git repository from GitHub, used the following command:
+
+   git clone "https://github.com/git/git.git"
+
+
+For examining branches in two git repositories, used the following command:
+
+    git branch -a
+
+For the difference, it turned out there's an additional branch called 'remotes/origin/jch' in the git repository cloned from GitHub.
